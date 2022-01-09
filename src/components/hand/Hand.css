@@ -1,0 +1,51 @@
+.hand-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.hand-wrapper.reverse {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.hand-content {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.hand-content > div {
+  flex: 1;
+}
+.hand-info {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hand-name {
+  color: white;
+  text-align: center;
+  padding: 16px 16px 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.hand-value {
+  width: 50px;
+  height: 50px;
+  color: black;
+  background-color: white;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+.card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 0 auto;
+  min-height: 147px;
+}
+.dealer-hand-card-wrapper {
+  transform: rotateZ(180deg);
+}

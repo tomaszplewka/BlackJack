@@ -1,0 +1,79 @@
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  outline: none;
+  margin: 0;
+  border: none;
+  background-color: rgb(1, 78, 1);
+  color: white;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: var(--transition-bezier);
+  text-align: center;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+form#bet-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+}
+.number-input {
+  border: 0;
+  display: inline-flex;
+  margin: auto;
+}
+.number-input button {
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--color-smoky-black);
+  color: white;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+  border-radius: 50%;
+}
+.number-input button:before,
+.number-input button:after {
+  display: inline-block;
+  position: absolute;
+  content: "";
+  width: 32px;
+  height: 4px;
+  background-color: white;
+  transform: translate(-50%, -50%);
+}
+.number-input button.increment:after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.number-input input[type="number"] {
+  font-family: var(--font-stack);
+  max-width: 150px;
+  width: 100%;
+  padding: 0 8px;
+  border: none;
+  border-width: 0 2px;
+  font-size: 32px;
+  height: 48px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+}
+#bet-submit {
+  width: 100%;
+  font-size: 28px;
+  padding: 0;
+  margin: 12px 0 0;
+}

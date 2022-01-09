@@ -1,0 +1,14 @@
+.table-wrapper {
+  max-width: 75%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px;
+  position: relative;
+}
+
+.controls-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+}

@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+<div>
+    <h1 align="center">Blakczak	:hearts: :spades: :diamonds: :clubs: </h1>
+    <p align="center">
+      <img src="https://img.shields.io/github/issues/tomaszplewka/blakczak666" alt="issues">
+      <img src="https://img.shields.io/github/forks/tomaszplewka/blakczak666" alt="forks">
+      <img src="https://img.shields.io/github/stars/tomaszplewka/blakczak666" alt="stars">
+      <img src="https://img.shields.io/github/license/tomaszplewka/blakczak666" alt="license">
+    </p>
+</div>
+<p align="center">
+    <a href="#description">Description</a> :pencil2: • 
+    <a href="#demo">Demo</a> :cinema: •
+    <a href="#toolbox">Toolbox</a> :hammer_and_wrench: •
+    <a href="#usage">Usage</a> :exclamation: •
+    <a href="#license">License</a> :white_check_mark:
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+# Description 
 
-In the project directory, you can run:
+**Is gambling your thing? Thought so!**
 
-### `npm start`
+- [x] Blackjack web app
+- [x] Full-stack app implemented using Firebase and its features: Firebase Authentication, Cloud Firestore
+- [x] Built using modern workflow with Babel & Webpack
+- [x] It is live thanks to Firebase Hosting service!
+- [x] Pure JavaScript in the front-end
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To do:
+- [ ] Not responsive
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Demo
 
-### `npm test`
+[Check it out here. It is live!](https://blakczak666.web.app/ "Blakczak666")
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Toolbox
 
-### `npm run build`
+<p align="">
+    <img src="https://github.com/tomaszplewka/08_task_manager_oop/blob/master/icons/html5.svg" width="100" alt="html5" >
+    <img src="https://github.com/tomaszplewka/08_task_manager_oop/blob/master/icons/css3.svg" width="72" alt="css3" >
+    <img src="https://github.com/tomaszplewka/08_task_manager_oop/blob/master/icons/javascript.svg" width="72" alt="js" >
+    <img src="https://github.com/tomaszplewka/08_task_manager_oop/blob/master/icons/babel.png" width="90" alt="babel" >
+    <img src="https://github.com/tomaszplewka/08_task_manager_oop/blob/master/icons/firebase.svg" width="60" alt="firebase" >
+    <img src="https://github.com/tomaszplewka/08_task_manager_oop/blob/master/icons/npm.png" width="90" alt="npm" >
+    <img src="https://github.com/tomaszplewka/08_task_manager_oop/blob/master/icons/webpack.svg" width="80" alt="webpack" >
+</p>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Usage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Just clone/fork the repo. Run npm install and then npm run serve (opens development mode) or npm run build (builds for production).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# License
 
-### `npm run eject`
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**[MIT license](http://opensource.org/licenses/mit-license.php)**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Copyright 2021 © Tomasz Plewka
