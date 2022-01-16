@@ -34,10 +34,7 @@
 }
 .btn:active,
 .btn:focus,
-.btn:hover,
-.side-btn:active,
-.side-btn:focus,
-.side-btn:hover {
+.btn:hover {
   color: var(--color-smoky-black);
   background-color: var(--color-carolina-blue);
   transition: var(--transition-bezier);
@@ -104,7 +101,6 @@
   transition: var(--transition-bezier);
 }
 .btn span,
-.btn-invert span,
 .control-btn span {
   position: relative;
   transition: var(--transition-bezier);
@@ -139,10 +135,15 @@
   background: var(--color-carolina-blue);
   transition: 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
-.social-icons,
+#sign-in.btn:hover .btn-text {
+  transform: translateY(-100px);
+}
+#sign-in.btn:hover .choices {
+  transform: translateY(0);
+}
 .choices {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 0;
   right: 0;
   display: flex;
@@ -164,14 +165,11 @@ li:hover {
   transition: 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
   color: white;
 }
-li a,
 li span {
   display: inline-flex;
   vertical-align: middle;
   transform: translateY(100px);
   transition: 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-li span {
   font-size: 16px;
   line-height: 1em;
 }
@@ -180,9 +178,9 @@ li span {
 #sign-in-options:hover .btn-text {
   transform: translateY(-100px);
 }
-#sign-in.btn:hover .social-icons li a,
+#sign-in.btn:hover .choices li span,
 #what-next-btn.btn:hover .choices li span,
-#sign-in-options:hover .social-icons li a {
+#sign-in-options:hover .social-icons li span {
   transform: translateY(0);
 }
 #what-next-btn.btn:disabled {
