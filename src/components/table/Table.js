@@ -6,6 +6,7 @@ import Hand from "../hand/Hand";
 import Feedback from "../feedback/Feedback";
 import WhatNext from "../whatNext/WhatNext";
 import Menu from "../menu/Menu";
+import History from "../history/History";
 
 import { drawCards } from "../modules/Api";
 import GameLogic from "../modules/GameLogic";
@@ -13,7 +14,8 @@ import LocalStorage from "../modules/LocalStorage";
 
 import "./Table.css";
 
-const Table = ({ deckId }) => {
+const Table = ({ deckId, setIsUserLoggedIn, Firebase, userId }) => {
+  const [isHistoryMode, setIsHistoryMode] = useState(false);
   const [gameState, setGameState] = useState([
     {
       round: null,
@@ -41,7 +43,7 @@ const Table = ({ deckId }) => {
     console.log("useEffect (gameState): ", gameState);
     // Check if round has finished
     const currRound = gameState[gameState.length - 1];
-    if (currRound.isRoundFinished) {
+    if (!isHistoryMode && currRound.isRoundFinished) {
       console.log("useEffect -- round is finished");
       setTimeout(() => {
         // Resolve round
@@ -85,7 +87,11 @@ const Table = ({ deckId }) => {
           });
         }
       }, 1500);
-    } else if (currRound.isPlayerActive != null && !currRound.isPlayerActive) {
+    } else if (
+      !isHistoryMode &&
+      currRound.isPlayerActive != null &&
+      !currRound.isPlayerActive
+    ) {
       setTimeout(() => {
         console.log("Resolve dealer: ");
         // Player is busted or stands -- resolve dealer's hand
@@ -148,7 +154,21 @@ const Table = ({ deckId }) => {
 
   return (
     <>
-      <Menu gameState={gameState} />
+      <Menu
+        gameState={gameState}
+        setGameState={setGameState}
+        setIsUserLoggedIn={setIsUserLoggedIn}
+        Firebase={Firebase}
+        userId={userId}
+        setIsHistoryMode={setIsHistoryMode}
+      />
+      {isHistoryMode ? (
+        <History
+          cb={setIsHistoryMode}
+          gameState={gameState}
+          setGameState={setGameState}
+        />
+      ) : null}
       <div className="table-wrapper">
         {gameState[gameState.length - 1].round ? (
           <Round gameState={gameState} />
@@ -166,26 +186,28 @@ const Table = ({ deckId }) => {
           hand={gameState[gameState.length - 1].hands.playerHand}
           value={gameState[gameState.length - 1].handValue.playerValue}
         />
-        <div className="controls-wrapper">
-          <Balance balance={gameState[gameState.length - 1].balance} />
-          {gameState[gameState.length - 1].round ? (
-            <WhatNext
-              drawCards={drawCards}
-              dealCards={GameLogic.dealCards}
-              getHandValue={GameLogic.getHandValue}
-              gameState={gameState}
-              setGameState={setGameState}
-            />
-          ) : gameState[gameState.length - 1].isGameFinished ? null : (
-            <Bet
-              drawCards={drawCards}
-              dealCards={GameLogic.dealCards}
-              getHandValue={GameLogic.getHandValue}
-              gameState={gameState}
-              setGameState={setGameState}
-            />
-          )}
-        </div>
+        {isHistoryMode ? null : (
+          <div className="controls-wrapper">
+            <Balance balance={gameState[gameState.length - 1].balance} />
+            {gameState[gameState.length - 1].round ? (
+              <WhatNext
+                drawCards={drawCards}
+                dealCards={GameLogic.dealCards}
+                getHandValue={GameLogic.getHandValue}
+                gameState={gameState}
+                setGameState={setGameState}
+              />
+            ) : gameState[gameState.length - 1].isGameFinished ? null : (
+              <Bet
+                drawCards={drawCards}
+                dealCards={GameLogic.dealCards}
+                getHandValue={GameLogic.getHandValue}
+                gameState={gameState}
+                setGameState={setGameState}
+              />
+            )}
+          </div>
+        )}
       </div>
     </>
   );

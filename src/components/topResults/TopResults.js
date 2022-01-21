@@ -3,8 +3,6 @@ import Btn from "../btn/Btn";
 
 import LocalStorage from "../modules/LocalStorage";
 
-import "./TopResults.css";
-
 const TopResults = ({ cb }) => {
   const results = LocalStorage.getFromLS("results");
   const renderedResults = results ? (
@@ -17,7 +15,7 @@ const TopResults = ({ cb }) => {
   return (
     <div className="top-results">
       <div className="btn-wrapper">
-        <Btn id="results-go-back" className="control-btn">
+        <Btn className="control-btn">
           <span onClick={() => cb(false)}>go back</span>
         </Btn>
       </div>

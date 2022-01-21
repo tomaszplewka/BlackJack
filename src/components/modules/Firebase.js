@@ -28,19 +28,14 @@ const Firebase = (() => {
   // Firestore
   const db = getFirestore();
 
-  const logInAnonymously = async (setAppState, authorization = auth) => {
+  const logInAnonymously = async (setIsUserLoggedIn, authorization = auth) => {
     try {
       const result = await signInAnonymously(authorization);
       // Signed in..
       console.log("SIGNED IN");
-      console.log("USER ID: ", result.user.uid);
+      // console.log("USER ID: ", result.user.uid);
       // Set state
-      setTimeout(() => {
-        setAppState((prevState) => ({
-          ...prevState,
-          isUserLoggedIn: true,
-        }));
-      }, 1500);
+      setIsUserLoggedIn(result.user.uid);
     } catch (error) {
       // const errorCode = error.code;
       const errorMessage = error.message;
@@ -92,43 +87,49 @@ const Firebase = (() => {
     }
   };
 
-  const logOut = async (authorization = auth) => {
+  const logOut = async (setIsUserLoggedIn, authorization = auth) => {
     try {
       await signOut(authorization);
       // Sign-out successful.
       console.log("SIGNED OUT");
+      // Set state
+      setIsUserLoggedIn(false);
     } catch (error) {
       // An error happened.
     }
   };
 
-  const storeUser = async () => {
-    await setDoc(doc(db, "users", "LA"), {
-      name: "Los Angeles",
-      state: "CA",
-      country: "USA",
+  const storeData = async (userId, data, setShowLoader) => {
+    // Get "users" collection
+    const querySnapshot = await getDocs(collection(db, "users"));
+    // Check if collection with userId already exists
+    let isUserInDb = false;
+    querySnapshot.forEach((singleDoc) => {
+      if (singleDoc.id === userId) {
+        // console.log(
+        //   "USER DOC BEFORE: ",
+        //   singleDoc.id,
+        //   " => ",
+        //   singleDoc.data()
+        // );
+        // Save doc with merge
+        setDoc(doc(db, "users", userId), { data });
+        isUserInDb = true;
+      }
     });
-    // const querySnapshot = await getDocs(collection(db, "users"));
-    // querySnapshot.forEach((doc) => {
-    //   // doc.data() is never undefined for query doc snapshots
-    //   console.log(doc.id, " => ", doc.data());
-    // });
-    // try {
-    //   const docRef = await addDoc(collection(db, "users"), {
-    //     first: "Ada",
-    //     last: "Lovelace",
-    //     born: 1815,
-    //     objectExample: {
-    //       a: 5,
-    //       b: {
-    //         nested: "foo",
-    //       },
-    //     },
-    //   });
-    //   console.log("Document written with ID: ", docRef.id);
-    // } catch (e) {
-    //   console.error("Error adding document: ", e);
-    // }
+    // Save brand-new user
+    if (!isUserInDb) {
+      try {
+        await addDoc(collection(db, "users", userId), { data });
+        console.log("NEW USER SAVED SUCCESSFULLY");
+      } catch (e) {
+        console.error("USER SAVING NOT SUCCESSFULL", e);
+      }
+    }
+
+    setTimeout(() => {
+      setShowLoader(false);
+    }, 1500);
   };
 
   return {
@@ -136,7 +137,7 @@ const Firebase = (() => {
     logInGoogle,
     logInGitHub,
     logOut,
-    storeUser,
+    storeData,
   };
 })();
 

@@ -19,7 +19,7 @@ export const drawCards = async (deckId, numOfCards) => {
   }
 };
 
-export const getDeck = async (setDeckId) => {
+export const getDeck = async (setAppState) => {
   try {
     const { data } = await axios.get(
       "https://deckofcardsapi.com/api/deck/new/shuffle",
@@ -30,7 +30,12 @@ export const getDeck = async (setDeckId) => {
         },
       }
     );
-    setDeckId(data.deck_id);
+    // Set state
+    setAppState((prevState) => ({
+      ...prevState,
+      deckId: data.deck_id,
+      showLoader: false,
+    }));
   } catch (e) {
     // COME UP WITH SOMETHING BETTER
     console.error("Error");

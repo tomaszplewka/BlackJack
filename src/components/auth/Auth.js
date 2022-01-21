@@ -1,5 +1,4 @@
 import React from "react";
-import Firebase from "../modules/Firebase";
 import Btn from "../btn/Btn";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,13 +6,12 @@ import { faGithub, faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 import "./Auth.css";
 
-const Auth = ({ onAuthClick, setAppState }) => {
+const Auth = ({ onAuthClick, setIsUserLoggedIn, Firebase }) => {
   const onGuestClick = (e) => {
     e.preventDefault();
     console.log("ON GUEST CLICK");
     onAuthClick();
-    // Firebase.storeUser();
-    Firebase.logInAnonymously(setAppState);
+    Firebase.logInAnonymously(setIsUserLoggedIn);
   };
 
   const onGitHubClick = (e) => {
