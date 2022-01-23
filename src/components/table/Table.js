@@ -6,7 +6,6 @@ import Hand from "../hand/Hand";
 import Feedback from "../feedback/Feedback";
 import WhatNext from "../whatNext/WhatNext";
 import Menu from "../menu/Menu";
-import History from "../history/History";
 
 import { drawCards } from "../modules/Api";
 import GameLogic from "../modules/GameLogic";
@@ -14,7 +13,7 @@ import LocalStorage from "../modules/LocalStorage";
 
 import "./Table.css";
 
-const Table = ({ deckId, setIsUserLoggedIn, Firebase, userId }) => {
+const Table = ({ appState, setAppState, Firebase }) => {
   const [isHistoryMode, setIsHistoryMode] = useState(false);
   const [gameState, setGameState] = useState([
     {
@@ -35,7 +34,7 @@ const Table = ({ deckId, setIsUserLoggedIn, Firebase, userId }) => {
       message: "Round begins. Place the bet.",
       result: null,
       isGameFinished: false,
-      deckId,
+      deckId: appState.deckId,
     },
   ]);
 
@@ -54,7 +53,11 @@ const Table = ({ deckId, setIsUserLoggedIn, Firebase, userId }) => {
           // Set state
           setGameState((prevState) => {
             return [
-              ...prevState,
+              ...prevState.slice(0, -1),
+              {
+                ...prevState.slice(-1)[0],
+                message: result,
+              },
               {
                 ...prevState[prevState.length - 1],
                 isGameFinished: true,
@@ -71,8 +74,14 @@ const Table = ({ deckId, setIsUserLoggedIn, Firebase, userId }) => {
         } else {
           // Set state
           setGameState((prevState) => {
+            console.log(prevState.slice(-1)[0]);
+
             return [
-              ...prevState,
+              ...prevState.slice(0, -1),
+              {
+                ...prevState.slice(-1)[0],
+                message: result,
+              },
               {
                 ...prevState[prevState.length - 1],
                 round: null,
@@ -150,25 +159,19 @@ const Table = ({ deckId, setIsUserLoggedIn, Firebase, userId }) => {
         }
       }, 1500);
     }
-  }, [gameState]);
+  }, [gameState, isHistoryMode]);
 
   return (
     <>
       <Menu
         gameState={gameState}
         setGameState={setGameState}
-        setIsUserLoggedIn={setIsUserLoggedIn}
+        setAppState={setAppState}
         Firebase={Firebase}
-        userId={userId}
+        appState={appState}
         setIsHistoryMode={setIsHistoryMode}
+        isHistoryMode={isHistoryMode}
       />
-      {isHistoryMode ? (
-        <History
-          cb={setIsHistoryMode}
-          gameState={gameState}
-          setGameState={setGameState}
-        />
-      ) : null}
       <div className="table-wrapper">
         {gameState[gameState.length - 1].round ? (
           <Round gameState={gameState} />

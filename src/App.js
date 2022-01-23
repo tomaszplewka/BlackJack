@@ -5,27 +5,56 @@ import Auth from "./components/auth/Auth";
 import Table from "./components/table/Table";
 import Loader from "./components/loader/Loader";
 
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 import "./App.css";
 
 const App = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  // const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   // const [showLoader, setShowLoader] = useState(false);
+  // const [deckId, setDeckId] = useState("");
   const [appState, setAppState] = useState({
     deckId: "",
     showLoader: false,
+    displayName: null,
+    photoUrl: null,
+    userId: "",
+    getNewDeck: false,
+    isUserLoggedIn: false,
+    gameState: null,
   });
   useEffect(() => {
+    // console.log("APP STATE: ", appState);
     // console.log("USER LOGGED IN: ", isUserLoggedIn);
     // console.log("SHOW LOADER: ", showLoader);
-    if (isUserLoggedIn) {
+    if (appState.getNewDeck) {
+      // Get new deck
       setTimeout(() => {
         getDeck(setAppState);
       }, 1500);
     }
-  }, [isUserLoggedIn]);
+  }, [appState]);
 
-  const onAuthClick = () => {
-    // console.log("AUTH CLICKED");
+  useEffect(() => {
+    window.addEventListener("beforeunload", async (e) => {
+      e.preventDefault();
+      // Save state
+
+      const swal = withReactContent(Swal);
+      await swal.fire({
+        title: <strong>Game saved!</strong>,
+        html: <i>You may go now!</i>,
+        icon: "success",
+      });
+
+      e.returnValue = "";
+    });
+  });
+
+  const onAuthClick = async () => {
+    console.log("APP STATE: ", appState);
+    // Show loader
     setAppState((prevState) => ({
       ...prevState,
       showLoader: true,
@@ -36,17 +65,16 @@ const App = () => {
 
   return (
     <section>
-      {isUserLoggedIn && appState.deckId ? (
+      {appState.isUserLoggedIn && (appState.deckId || appState.gameState) ? (
         <Table
-          deckId={appState.deckId}
-          setIsUserLoggedIn={setIsUserLoggedIn}
+          appState={appState}
+          setAppState={setAppState}
           Firebase={Firebase}
-          userId={isUserLoggedIn}
         />
       ) : (
         <Auth
           onAuthClick={onAuthClick}
-          setIsUserLoggedIn={setIsUserLoggedIn}
+          setAppState={setAppState}
           Firebase={Firebase}
         />
       )}

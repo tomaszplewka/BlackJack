@@ -35,6 +35,7 @@ export const getDeck = async (setAppState) => {
       ...prevState,
       deckId: data.deck_id,
       showLoader: false,
+      getNewDeck: false,
     }));
   } catch (e) {
     // COME UP WITH SOMETHING BETTER

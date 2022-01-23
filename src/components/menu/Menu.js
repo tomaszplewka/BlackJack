@@ -10,10 +10,11 @@ import "./Menu.css";
 const Menu = ({
   gameState,
   setGameState,
-  setIsUserLoggedIn,
+  setAppState,
   Firebase,
-  userId,
+  appState,
   setIsHistoryMode,
+  isHistoryMode,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTopResultsOpen, setIsTopResultsOpen] = useState(false);
@@ -22,7 +23,16 @@ const Menu = ({
   const [showLoader, setShowLoader] = useState(false);
 
   const onMenuClick = () => {
+    // Open / close menu
     setIsMenuOpen(!isMenuOpen);
+    // Close TopResults and / or Load
+    setTimeout(() => {
+      if (isTopResultsOpen) {
+        setIsTopResultsOpen(false);
+      } else if (isLoadOpen) {
+        setIsLoadOpen(false);
+      }
+    }, 300);
   };
 
   const onOptionClick = (e) => {
@@ -49,7 +59,7 @@ const Menu = ({
 
     // Log out
     setTimeout(() => {
-      Firebase.logOut(setIsUserLoggedIn);
+      Firebase.logOut(setAppState);
     }, 1500);
   };
 
@@ -89,9 +99,9 @@ const Menu = ({
   const onSaveClick = (e) => {
     // Show loader
     setShowLoader(true);
-    console.log("USER ID: ", userId);
-    // Ssave user's data
-    Firebase.storeData(userId, gameState, setShowLoader);
+    console.log("USER ID: ", appState.userId);
+    // Save user's data
+    Firebase.storeData(appState.userId, gameState, setShowLoader);
   };
 
   const onHistoryClick = (e) => {
@@ -114,6 +124,13 @@ const Menu = ({
           <span></span>
         </div>
       </div>
+      {isHistoryMode ? (
+        <History
+          cb={setIsHistoryMode}
+          gameState={gameState}
+          setGameState={setGameState}
+        />
+      ) : null}
       <section className={`options-wrapper ${isMenuOpen ? "" : "roll-up"}`}>
         <div className="options">
           <Btn id="top-results" className="btn">
@@ -137,7 +154,14 @@ const Menu = ({
             <span onClick={(e) => onOptionClick(e)}>load</span>
           </Btn>
           {isLoadOpen ? (
-            <LoadedRounds cb={setIsLoadOpen} gameState={gameState} />
+            <LoadedRounds
+              cb={setIsLoadOpen}
+              gameState={gameState}
+              setGameState={setGameState}
+              setIsMenuOpen={setIsMenuOpen}
+              setShowLoader={setShowLoader}
+              setIsLoadOpen={setIsLoadOpen}
+            />
           ) : null}
           <Btn id="restart" className="btn">
             <span onClick={(e) => onRestartClick(e)}>restart</span>

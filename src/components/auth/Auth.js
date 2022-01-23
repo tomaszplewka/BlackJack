@@ -6,36 +6,35 @@ import { faGithub, faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 import "./Auth.css";
 
-const Auth = ({ onAuthClick, setIsUserLoggedIn, Firebase }) => {
-  const onGuestClick = (e) => {
+const Auth = ({ onAuthClick, setAppState, Firebase }) => {
+  const onBtnClick = (e) => {
     e.preventDefault();
-    console.log("ON GUEST CLICK");
+    // Show loader
     onAuthClick();
-    Firebase.logInAnonymously(setIsUserLoggedIn);
-  };
-
-  const onGitHubClick = (e) => {
-    e.preventDefault();
-    console.log("GITHUB CLICKED");
-    Firebase.logInGitHub();
-  };
-
-  const onGoogleClick = (e) => {
-    e.preventDefault();
-    console.log("GOOGLE CLICKED");
-    Firebase.logInGoogle();
-  };
-
-  const onLogOutClick = (e) => {
-    e.preventDefault();
-    Firebase.logOut();
+    // Resolve login method
+    const targetId = e.target.id;
+    switch (targetId) {
+      case "guest":
+        Firebase.logInAnonymously(setAppState);
+        break;
+      case "google":
+        Firebase.logInGoogle(setAppState);
+        break;
+      case "github":
+        Firebase.logInGitHub(setAppState);
+        break;
+      default:
+        break;
+    }
   };
 
   return (
-    <section id="welcome-section">
+    <section className="welcome-section">
       <div className="welcome-wrapper">
-        <Btn id="guest" className="btn">
-          <span onClick={(e) => onGuestClick(e)}>guest</span>
+        <Btn className="btn">
+          <span id="guest" onClick={(e) => onBtnClick(e)}>
+            guest
+          </span>
         </Btn>
         <Btn id="sign-in" className="btn">
           <span className="btn-text">sign in</span>
@@ -44,7 +43,7 @@ const Auth = ({ onAuthClick, setIsUserLoggedIn, Firebase }) => {
               <span
                 id="google"
                 onClick={(e) => {
-                  onGoogleClick(e);
+                  onBtnClick(e);
                 }}
               >
                 <FontAwesomeIcon icon={faGoogle} />
@@ -55,21 +54,10 @@ const Auth = ({ onAuthClick, setIsUserLoggedIn, Firebase }) => {
                 id="github"
                 target="_blank"
                 onClick={(e) => {
-                  onGitHubClick(e);
+                  onBtnClick(e);
                 }}
               >
                 <FontAwesomeIcon icon={faGithub} />
-              </span>
-            </li>
-            <li>
-              <span
-                id="github"
-                target="_blank"
-                onClick={(e) => {
-                  onLogOutClick(e);
-                }}
-              >
-                LOG OUT
               </span>
             </li>
           </ul>

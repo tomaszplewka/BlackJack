@@ -9,14 +9,7 @@ import {
   signOut,
 } from "firebase/auth";
 
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  setDoc,
-} from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
 const Firebase = (() => {
   // Initialize Firebase
@@ -28,103 +21,168 @@ const Firebase = (() => {
   // Firestore
   const db = getFirestore();
 
-  const logInAnonymously = async (setIsUserLoggedIn, authorization = auth) => {
+  const logInAnonymously = async (setAppState, authorization = auth) => {
     try {
-      const result = await signInAnonymously(authorization);
+      await signInAnonymously(authorization);
       // Signed in..
       console.log("SIGNED IN");
-      // console.log("USER ID: ", result.user.uid);
+      // Check if user already exists in db
+      const isUserInDb = await userExists("guest");
       // Set state
-      setIsUserLoggedIn(result.user.uid);
+      if (isUserInDb) {
+        const guestDoc = await getDoc(doc(db, "users", "guest"));
+        setAppState((prevState) => {
+          return {
+            ...prevState,
+            userId: "guest",
+            getNewDeck: false,
+            isUserLoggedIn: true,
+            gameState: guestDoc.data().data,
+            showLoader: false,
+          };
+        });
+      } else {
+        setAppState((prevState) => {
+          return {
+            ...prevState,
+            userId: "guest",
+            getNewDeck: true,
+            isUserLoggedIn: true,
+          };
+        });
+      }
     } catch (error) {
-      // const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorMessage);
     }
   };
 
-  const logInGitHub = async (authorization = auth) => {
+  const logInGitHub = async (setAppState, authorization = auth) => {
     try {
       const provider = new GithubAuthProvider();
       provider.setCustomParameters({ propmt: "select_account" });
       const result = await signInWithPopup(authorization, provider);
-      // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-      // const credential = GithubAuthProvider.credentialFromResult(result);
-      // const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      console.log("GITHUB USER: ", user);
+      // Check if user already exists in db
+      const isUserInDb = await userExists(result.user.uid);
+      // Set state
+      if (isUserInDb) {
+        const guestDoc = await getDoc(doc(db, "users", result.user.uid));
+        setAppState((prevState) => {
+          return {
+            ...prevState,
+            userId: result.user.uid,
+            getNewDeck: false,
+            isUserLoggedIn: true,
+            gameState: guestDoc.data().data,
+            showLoader: false,
+            displayName: result.user.displayName,
+            photoUrl: result.user.photoURL,
+          };
+        });
+      } else {
+        setAppState((prevState) => {
+          return {
+            ...prevState,
+            userId: result.user.uid,
+            getNewDeck: true,
+            isUserLoggedIn: true,
+            displayName: result.user.displayName,
+            photoUrl: result.user.photoURL,
+          };
+        });
+      }
     } catch (error) {
-      // Handle Errors here.
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-      // The email of the user's account used.
-      // const email = error.email;
-      // The AuthCredential type that was used.
-      // const credential = GithubAuthProvider.credentialFromError(error);
+      const errorMessage = error.message;
+      console.log(errorMessage);
     }
   };
 
-  const logInGoogle = async (authorization = auth) => {
+  const logInGoogle = async (setAppState, authorization = auth) => {
     try {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ propmt: "select_account" });
       const result = await signInWithPopup(authorization, provider);
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      // const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      console.log("GOOGLE USER: ", user);
+      // Check if user already exists in db
+      const isUserInDb = await userExists(result.user.uid);
+      // Set state
+      if (isUserInDb) {
+        const guestDoc = await getDoc(doc(db, "users", result.user.uid));
+        setAppState((prevState) => {
+          return {
+            ...prevState,
+            userId: result.user.uid,
+            getNewDeck: false,
+            isUserLoggedIn: true,
+            gameState: guestDoc.data().data,
+            showLoader: false,
+            displayName: result.user.displayName,
+            photoUrl: result.user.photoURL,
+          };
+        });
+      } else {
+        setAppState((prevState) => {
+          return {
+            ...prevState,
+            userId: result.user.uid,
+            getNewDeck: true,
+            isUserLoggedIn: true,
+            displayName: result.user.displayName,
+            photoUrl: result.user.photoURL,
+          };
+        });
+      }
     } catch (error) {
-      // Handle Errors here.
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-      // The email of the user's account used.
-      // const email = error.email;
-      // The AuthCredential type that was used.
-      // const credential = GoogleAuthProvider.credentialFromError(error);
+      const errorMessage = error.message;
+      console.log(errorMessage);
     }
   };
 
-  const logOut = async (setIsUserLoggedIn, authorization = auth) => {
+  const logOut = async (setAppState, authorization = auth) => {
     try {
       await signOut(authorization);
       // Sign-out successful.
       console.log("SIGNED OUT");
       // Set state
-      setIsUserLoggedIn(false);
+      setAppState((prevState) => {
+        return {
+          ...prevState,
+          isUserLoggedIn: false,
+        };
+      });
     } catch (error) {
-      // An error happened.
+      const errorMessage = error.message;
+      console.log(errorMessage);
     }
   };
 
-  const storeData = async (userId, data, setShowLoader) => {
+  const userExists = async (userId) => {
     // Get "users" collection
-    const querySnapshot = await getDocs(collection(db, "users"));
+    const docSnap = await getDoc(doc(db, "users", userId));
     // Check if collection with userId already exists
     let isUserInDb = false;
-    querySnapshot.forEach((singleDoc) => {
-      if (singleDoc.id === userId) {
-        // console.log(
-        //   "USER DOC BEFORE: ",
-        //   singleDoc.id,
-        //   " => ",
-        //   singleDoc.data()
-        // );
-        // Save doc with merge
-        setDoc(doc(db, "users", userId), { data });
-        isUserInDb = true;
-      }
-    });
+    if (docSnap.exists()) {
+      isUserInDb = true;
+    }
+
+    return isUserInDb;
+  };
+
+  const storeData = async (userId, data, setShowLoader) => {
+    // Check if user exists
+    console.log("USER IN STORE DATA: ", userId);
+    const isUserInDb = await userExists(userId);
     // Save brand-new user
     if (!isUserInDb) {
       try {
-        await addDoc(collection(db, "users", userId), { data });
+        await setDoc(doc(db, "users", userId), { data });
         console.log("NEW USER SAVED SUCCESSFULLY");
-      } catch (e) {
-        console.error("USER SAVING NOT SUCCESSFULL", e);
+      } catch (error) {
+        const errorMessage = error.message;
+        console.log(errorMessage);
       }
+    } else {
+      // Save doc with merge
+      setDoc(doc(db, "users", userId), { data });
     }
 
     setTimeout(() => {

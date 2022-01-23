@@ -1,12 +1,36 @@
 import React from "react";
 import Btn from "../btn/Btn";
 
-const LoadedRounds = ({ cb, gameState }) => {
+const LoadedRounds = ({
+  cb,
+  gameState,
+  setGameState,
+  setIsMenuOpen,
+  setShowLoader,
+  setIsLoadOpen,
+}) => {
   const onBtnClick = (e) => {
-    console.log(e.target.getAttribute("data-key"));
+    console.log("LOADING ROUND");
+    // Show loader
+    setShowLoader(true);
+    // Set state
+    setTimeout(() => {
+      const roundToLoad = e.target.getAttribute("data-key");
+      setGameState((prevState) => {
+        return [...prevState.slice(0, roundToLoad)];
+      });
+      // Close LoadedRounds
+      setIsLoadOpen(false);
+      // Close menu
+      setIsMenuOpen(false);
+      // Hide loader
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 300);
+    }, 1500);
   };
 
-  const renderedRounds = gameState.map((round, index) => {
+  const renderedRounds = gameState.slice(1).map((round, index) => {
     return (
       <Btn key={index + 1} className="btn">
         <span
@@ -14,7 +38,7 @@ const LoadedRounds = ({ cb, gameState }) => {
           onClick={(e) => {
             onBtnClick(e);
           }}
-        >{`Round ${index + 1}`}</span>
+        >{`End of Round ${index + 1}`}</span>
       </Btn>
     );
   });
@@ -26,7 +50,9 @@ const LoadedRounds = ({ cb, gameState }) => {
           <span onClick={() => cb(false)}>go back</span>
         </Btn>
       </div>
-      <ul className="results-wrapper">{renderedRounds}</ul>
+      <ul className="results-wrapper">
+        {gameState.length === 1 ? "No rounds to load" : renderedRounds}
+      </ul>
     </div>
   );
 };

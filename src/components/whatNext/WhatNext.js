@@ -113,72 +113,80 @@ const WhatNext = ({
 
   const onDoubleDownClick = () => {
     console.log("DOUBLE DOWN IS CLICKED");
-    // Disable what-next btn
-    ref.current.firstElementChild.disabled = true;
-    // Draw a card
-    setTimeout(async () => {
-      const card = await drawCards(gameState[gameState.length - 1].deckId, 1);
-      // Deal cards & concat with current hand
-      const newCard = dealCards(card, ["player"]);
-      const currPlayerHand = gameState[gameState.length - 1].hands.playerHand;
-      currPlayerHand.push(...newCard);
-      // Get hand value
-      const playerValue = getHandValue(currPlayerHand);
-      // Set state
-      setGameState((prevState) => {
-        const currRound = prevState[prevState.length - 1];
-        const result =
-          playerValue >= 21
-            ? playerValue === 21
-              ? "Player has blackjack."
-              : "Player is busted."
-            : "Dealer draws.";
-        if (prevState.length === 1) {
-          return [
-            {
-              ...currRound,
-              hands: {
-                ...currRound.hands,
-                playerHand: [...currPlayerHand],
+    const tempBalance =
+      gameState[gameState.length - 1].balance -
+      gameState[gameState.length - 1].bet;
+
+    if (tempBalance >= 0) {
+      // Disable what-next btn
+      ref.current.firstElementChild.disabled = true;
+      // Draw a card
+      setTimeout(async () => {
+        const card = await drawCards(gameState[gameState.length - 1].deckId, 1);
+        // Deal cards & concat with current hand
+        const newCard = dealCards(card, ["player"]);
+        const currPlayerHand = gameState[gameState.length - 1].hands.playerHand;
+        currPlayerHand.push(...newCard);
+        // Get hand value
+        const playerValue = getHandValue(currPlayerHand);
+        // Set state
+        setGameState((prevState) => {
+          const currRound = prevState[prevState.length - 1];
+          const result =
+            playerValue >= 21
+              ? playerValue === 21
+                ? "Player has blackjack."
+                : "Player is busted."
+              : "Dealer draws.";
+          if (prevState.length === 1) {
+            return [
+              {
+                ...currRound,
+                hands: {
+                  ...currRound.hands,
+                  playerHand: [...currPlayerHand],
+                },
+                handValue: {
+                  ...currRound.handValue,
+                  playerValue,
+                },
+                lastMove: "double down",
+                isRoundFinished: playerValue >= 21 ? true : false,
+                isPlayerActive: false,
+                bet: currRound.bet * 2,
+                balance: currRound.balance - currRound.bet,
+                result,
+                message: `Player doubles down. ${result}`,
               },
-              handValue: {
-                ...currRound.handValue,
-                playerValue,
+            ];
+          } else {
+            return [
+              ...prevState.slice(0, prevState.length - 1),
+              {
+                ...currRound,
+                hands: {
+                  ...currRound.hands,
+                  playerHand: [...currPlayerHand],
+                },
+                handValue: {
+                  ...currRound.handValue,
+                  playerValue,
+                },
+                lastMove: "double down",
+                isRoundFinished: playerValue >= 21 ? true : false,
+                isPlayerActive: false,
+                bet: currRound.bet * 2,
+                balance: currRound.balance - currRound.bet,
+                result,
+                message: `Player doubles down. ${result}`,
               },
-              lastMove: "double down",
-              isRoundFinished: playerValue >= 21 ? true : false,
-              isPlayerActive: false,
-              bet: currRound.bet * 2,
-              balance: currRound.balance - currRound.bet,
-              result,
-              message: `Player doubles down. ${result}`,
-            },
-          ];
-        } else {
-          return [
-            ...prevState.slice(0, prevState.length - 1),
-            {
-              ...currRound,
-              hands: {
-                ...currRound.hands,
-                playerHand: [...currPlayerHand],
-              },
-              handValue: {
-                ...currRound.handValue,
-                playerValue,
-              },
-              lastMove: "double down",
-              isRoundFinished: playerValue >= 21 ? true : false,
-              isPlayerActive: false,
-              bet: currRound.bet * 2,
-              balance: currRound.balance - currRound.bet,
-              result,
-              message: `Player doubles down. ${result}`,
-            },
-          ];
-        }
-      });
-    }, 1500);
+            ];
+          }
+        });
+      }, 1500);
+    } else {
+      alert("Nie mozesz tak zrobic!!!");
+    }
   };
 
   return (
