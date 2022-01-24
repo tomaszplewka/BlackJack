@@ -10,7 +10,6 @@ const LoadedRounds = ({
   setIsLoadOpen,
 }) => {
   const onBtnClick = (e) => {
-    console.log("LOADING ROUND");
     // Show loader
     setShowLoader(true);
     // Set state
@@ -51,7 +50,7 @@ const LoadedRounds = ({
         </Btn>
       </div>
       <ul className="results-wrapper">
-        {gameState.length === 1 ? "No rounds to load" : renderedRounds}
+        {gameState.length === 1 ? <p>NO ROUNDS TO LOAD</p> : renderedRounds}
       </ul>
     </div>
   );

@@ -10,7 +10,7 @@ const TopResults = ({ cb }) => {
       return <li key={index}>{`${index + 1}. ${result}`}</li>;
     })
   ) : (
-    <p>No results to show</p>
+    <p>NO RESULTS TO SHOW</p>
   );
   return (
     <div className="top-results">

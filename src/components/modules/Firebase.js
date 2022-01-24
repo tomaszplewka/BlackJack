@@ -11,6 +11,8 @@ import {
 
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
+import LocalStorage from "./LocalStorage";
+
 const Firebase = (() => {
   // Initialize Firebase
   initializeApp(FirebaseConfig);
@@ -26,31 +28,45 @@ const Firebase = (() => {
       await signInAnonymously(authorization);
       // Signed in..
       console.log("SIGNED IN");
+      // Check if user already exists in LS
+      const guestFromLS = LocalStorage.getFromLS("guest");
+      console.log("GUEST FROM LS: ", guestFromLS);
       // Check if user already exists in db
       const isUserInDb = await userExists("guest");
-      // Set state
-      if (isUserInDb) {
+      // Resolve state
+      let getNewDeck = false;
+      let gameState = null;
+      let showLoader = false;
+      if (guestFromLS && isUserInDb) {
         const guestDoc = await getDoc(doc(db, "users", "guest"));
-        setAppState((prevState) => {
-          return {
-            ...prevState,
-            userId: "guest",
-            getNewDeck: false,
-            isUserLoggedIn: true,
-            gameState: guestDoc.data().data,
-            showLoader: false,
-          };
-        });
+        console.log("GUEST DOC: ", guestDoc.data());
+        if (guestFromLS.timestamp >= guestDoc.data().timestamp) {
+          console.log("FROM LS");
+          gameState = guestFromLS.data;
+        } else {
+          console.log("FROM FIRESTORE");
+          gameState = guestDoc.data().data;
+        }
+      } else if (guestFromLS) {
+        gameState = guestFromLS.data;
+      } else if (isUserInDb) {
+        const guestDoc = await getDoc(doc(db, "users", "guest"));
+        gameState = guestDoc.data().data;
       } else {
-        setAppState((prevState) => {
-          return {
-            ...prevState,
-            userId: "guest",
-            getNewDeck: true,
-            isUserLoggedIn: true,
-          };
-        });
+        getNewDeck = true;
+        showLoader = true;
       }
+      // Set state
+      setAppState((prevState) => {
+        return {
+          ...prevState,
+          userId: "guest",
+          getNewDeck,
+          isUserLoggedIn: true,
+          gameState,
+          showLoader,
+        };
+      });
     } catch (error) {
       const errorMessage = error.message;
       console.log(errorMessage);
@@ -62,35 +78,46 @@ const Firebase = (() => {
       const provider = new GithubAuthProvider();
       provider.setCustomParameters({ propmt: "select_account" });
       const result = await signInWithPopup(authorization, provider);
+      // Check if user already exists in LS
+      const guestFromLS = LocalStorage.getFromLS(result.user.uid);
       // Check if user already exists in db
       const isUserInDb = await userExists(result.user.uid);
-      // Set state
-      if (isUserInDb) {
+      // Resolve state
+      let getNewDeck = false;
+      let gameState = null;
+      let showLoader = false;
+      if (guestFromLS && isUserInDb) {
         const guestDoc = await getDoc(doc(db, "users", result.user.uid));
-        setAppState((prevState) => {
-          return {
-            ...prevState,
-            userId: result.user.uid,
-            getNewDeck: false,
-            isUserLoggedIn: true,
-            gameState: guestDoc.data().data,
-            showLoader: false,
-            displayName: result.user.displayName,
-            photoUrl: result.user.photoURL,
-          };
-        });
+        console.log("GUEST DOC: ", guestDoc.data());
+        if (guestFromLS.timestamp >= guestDoc.data().timestamp) {
+          console.log("FROM LS");
+          gameState = guestFromLS.data;
+        } else {
+          console.log("FROM FIRESTORE");
+          gameState = guestDoc.data().data;
+        }
+      } else if (guestFromLS) {
+        gameState = guestFromLS.data;
+      } else if (isUserInDb) {
+        const guestDoc = await getDoc(doc(db, "users", result.user.uid));
+        gameState = guestDoc.data().data;
       } else {
-        setAppState((prevState) => {
-          return {
-            ...prevState,
-            userId: result.user.uid,
-            getNewDeck: true,
-            isUserLoggedIn: true,
-            displayName: result.user.displayName,
-            photoUrl: result.user.photoURL,
-          };
-        });
+        getNewDeck = true;
+        showLoader = true;
       }
+      // Set state
+      setAppState((prevState) => {
+        return {
+          ...prevState,
+          userId: result.user.uid,
+          getNewDeck,
+          isUserLoggedIn: true,
+          gameState,
+          showLoader,
+          displayName: result.user.displayName,
+          photoUrl: result.user.photoURL,
+        };
+      });
     } catch (error) {
       const errorMessage = error.message;
       console.log(errorMessage);
@@ -102,35 +129,46 @@ const Firebase = (() => {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ propmt: "select_account" });
       const result = await signInWithPopup(authorization, provider);
+      // Check if user already exists in LS
+      const guestFromLS = LocalStorage.getFromLS(result.user.uid);
       // Check if user already exists in db
       const isUserInDb = await userExists(result.user.uid);
-      // Set state
-      if (isUserInDb) {
+      // Resolve state
+      let getNewDeck = false;
+      let gameState = null;
+      let showLoader = false;
+      if (guestFromLS && isUserInDb) {
         const guestDoc = await getDoc(doc(db, "users", result.user.uid));
-        setAppState((prevState) => {
-          return {
-            ...prevState,
-            userId: result.user.uid,
-            getNewDeck: false,
-            isUserLoggedIn: true,
-            gameState: guestDoc.data().data,
-            showLoader: false,
-            displayName: result.user.displayName,
-            photoUrl: result.user.photoURL,
-          };
-        });
+        console.log("GUEST DOC: ", guestDoc.data());
+        if (guestFromLS.timestamp >= guestDoc.data().timestamp) {
+          console.log("FROM LS");
+          gameState = guestFromLS.data;
+        } else {
+          console.log("FROM FIRESTORE");
+          gameState = guestDoc.data().data;
+        }
+      } else if (guestFromLS) {
+        gameState = guestFromLS.data;
+      } else if (isUserInDb) {
+        const guestDoc = await getDoc(doc(db, "users", result.user.uid));
+        gameState = guestDoc.data().data;
       } else {
-        setAppState((prevState) => {
-          return {
-            ...prevState,
-            userId: result.user.uid,
-            getNewDeck: true,
-            isUserLoggedIn: true,
-            displayName: result.user.displayName,
-            photoUrl: result.user.photoURL,
-          };
-        });
+        getNewDeck = true;
+        showLoader = true;
       }
+      // Set state
+      setAppState((prevState) => {
+        return {
+          ...prevState,
+          userId: result.user.uid,
+          getNewDeck,
+          isUserLoggedIn: true,
+          gameState,
+          showLoader,
+          displayName: result.user.displayName,
+          photoUrl: result.user.photoURL,
+        };
+      });
     } catch (error) {
       const errorMessage = error.message;
       console.log(errorMessage);
@@ -174,7 +212,10 @@ const Firebase = (() => {
     // Save brand-new user
     if (!isUserInDb) {
       try {
-        await setDoc(doc(db, "users", userId), { data });
+        await setDoc(doc(db, "users", userId), {
+          data,
+          timestamp: Date.now(),
+        });
         console.log("NEW USER SAVED SUCCESSFULLY");
       } catch (error) {
         const errorMessage = error.message;
@@ -182,12 +223,18 @@ const Firebase = (() => {
       }
     } else {
       // Save doc with merge
-      setDoc(doc(db, "users", userId), { data });
+      console.log("SET DOC");
+      setDoc(doc(db, "users", userId), {
+        data,
+        timestamp: Date.now(),
+      });
     }
 
-    setTimeout(() => {
-      setShowLoader(false);
-    }, 1500);
+    if (setShowLoader) {
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 1500);
+    }
   };
 
   return {

@@ -11,41 +11,46 @@ import { drawCards } from "../modules/Api";
 import GameLogic from "../modules/GameLogic";
 import LocalStorage from "../modules/LocalStorage";
 
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 import "./Table.css";
 
 const Table = ({ appState, setAppState, Firebase }) => {
   const [isHistoryMode, setIsHistoryMode] = useState(false);
-  const [gameState, setGameState] = useState([
-    {
-      round: null,
-      balance: 1000,
-      bet: null,
-      hands: {
-        playerHand: null,
-        dealerHand: null,
-      },
-      handValue: {
-        playerValue: null,
-        dealerValue: null,
-      },
-      lastMove: null,
-      isRoundFinished: null,
-      isPlayerActive: null,
-      message: "Round begins. Place the bet.",
-      result: null,
-      isGameFinished: false,
-      deckId: appState.deckId,
-    },
-  ]);
+  const [gameState, setGameState] = useState(
+    appState.gameState
+      ? appState.gameState
+      : [
+          {
+            round: null,
+            balance: 1000,
+            bet: null,
+            hands: {
+              playerHand: null,
+              dealerHand: null,
+            },
+            handValue: {
+              playerValue: null,
+              dealerValue: null,
+            },
+            lastMove: null,
+            isRoundFinished: null,
+            isPlayerActive: null,
+            message: "Round begins. Place the bet.",
+            result: null,
+            isGameFinished: false,
+            deckId: appState.deckId,
+          },
+        ]
+  );
 
   useEffect(() => {
-    console.log("useEffect (gameState): ", gameState);
-    // Check if round has finished
     const currRound = gameState[gameState.length - 1];
+    // Check if round has finished
     if (!isHistoryMode && currRound.isRoundFinished) {
-      console.log("useEffect -- round is finished");
+      // Resolve round
       setTimeout(() => {
-        // Resolve round
         const { newBalance, result } = GameLogic.resolveRound(gameState);
         if (currRound.round === 5) {
           // Set top results
@@ -102,15 +107,14 @@ const Table = ({ appState, setAppState, Firebase }) => {
       !currRound.isPlayerActive
     ) {
       setTimeout(() => {
-        console.log("Resolve dealer: ");
         // Player is busted or stands -- resolve dealer's hand
         const { status, mappedDealerHand } = GameLogic.resolveDealer({
           gameState,
           setGameState,
         });
         if (!status) {
+          // Draw card & concat with curr hand
           setTimeout(async () => {
-            // Draw card & concat with curr hand
             const cards = await drawCards(
               gameState[gameState.length - 1].deckId,
               1
@@ -119,7 +123,6 @@ const Table = ({ appState, setAppState, Firebase }) => {
             mappedDealerHand.push(...dealerHand);
             // Get hand value
             const dealerValue = GameLogic.getHandValue(mappedDealerHand);
-            console.log("BEFORE SETGAMESTATE");
             // Set state
             setGameState((prevState) => {
               if (prevState.length === 1) {
@@ -161,20 +164,54 @@ const Table = ({ appState, setAppState, Firebase }) => {
     }
   }, [gameState, isHistoryMode]);
 
+  useEffect(() => {
+    console.log("EVENT LISTENER");
+
+    const beforeUnloadCb = async (e) => {
+      // Check if user is logged in
+      if (appState.isUserLoggedIn) {
+        e.preventDefault();
+
+        if (!isHistoryMode) {
+          // Save user's data
+          LocalStorage.saveToLocalStorage(appState.userId, {
+            data: gameState,
+            timestamp: Date.now(),
+          });
+        }
+        // Show alert
+        const swal = withReactContent(Swal);
+        await swal.fire({
+          title: <strong>Game saved!</strong>,
+          html: <i>You may go now!</i>,
+          icon: "success",
+        });
+
+        e.returnValue = "";
+      }
+    };
+
+    window.addEventListener("beforeunload", beforeUnloadCb);
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnloadCb);
+    };
+  });
+
   return (
     <>
       <Menu
         gameState={gameState}
         setGameState={setGameState}
-        setAppState={setAppState}
-        Firebase={Firebase}
         appState={appState}
-        setIsHistoryMode={setIsHistoryMode}
+        setAppState={setAppState}
         isHistoryMode={isHistoryMode}
+        setIsHistoryMode={setIsHistoryMode}
+        Firebase={Firebase}
       />
       <div className="table-wrapper">
         {gameState[gameState.length - 1].round ? (
-          <Round gameState={gameState} />
+          <Round round={gameState[gameState.length - 1].round} />
         ) : (
           ""
         )}

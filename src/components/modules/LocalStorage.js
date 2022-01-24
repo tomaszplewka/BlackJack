@@ -20,8 +20,8 @@ const LocalStorage = (() => {
   const getFromLS = (key) => {
     return JSON.parse(localStorage.getItem(key));
   };
-  const saveToLocalStorage = (data) => {
-    // localStorage.setItem("savedGames", JSON.stringify(data));
+  const saveToLocalStorage = (key, data) => {
+    localStorage.setItem(key, JSON.stringify(data));
   };
 
   return {

@@ -5,16 +5,19 @@ import TopResults from "../topResults/TopResults";
 import History from "../history/History";
 import LoadedRounds from "../loadedRounds/LoadedRounds";
 
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 import "./Menu.css";
 
 const Menu = ({
   gameState,
   setGameState,
-  setAppState,
-  Firebase,
   appState,
-  setIsHistoryMode,
+  setAppState,
   isHistoryMode,
+  setIsHistoryMode,
+  Firebase,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTopResultsOpen, setIsTopResultsOpen] = useState(false);
@@ -56,7 +59,7 @@ const Menu = ({
     // Show loader
     setShowLoader(true);
     // Save game
-
+    Firebase.storeData(appState.userId, gameState);
     // Log out
     setTimeout(() => {
       Firebase.logOut(setAppState);
@@ -66,6 +69,7 @@ const Menu = ({
   const onRestartClick = (e) => {
     // Show loader
     setShowLoader(true);
+    // Close menu
     setIsMenuOpen(!isMenuOpen);
     // Restart game
     setGameState((prevState) => [
@@ -99,18 +103,26 @@ const Menu = ({
   const onSaveClick = (e) => {
     // Show loader
     setShowLoader(true);
-    console.log("USER ID: ", appState.userId);
     // Save user's data
     Firebase.storeData(appState.userId, gameState, setShowLoader);
+    // Show alert
+    setTimeout(async () => {
+      const swal = withReactContent(Swal);
+      await swal.fire({
+        title: <strong>Game saved!</strong>,
+        icon: "success",
+      });
+    }, 1500);
   };
 
   const onHistoryClick = (e) => {
-    console.log("HISTORY MODE");
+    // Save user's game
+    Firebase.storeData(appState.userId, gameState);
+    // Close menu
     setIsMenuOpen(false);
+    // Set history mode
     setIsHistoryMode(true);
   };
-
-  console.log("MENU");
 
   return (
     <>
@@ -149,7 +161,6 @@ const Menu = ({
               save
             </span>
           </Btn>
-          {/* <div className="save-wrapper roll-up"></div> */}
           <Btn id="load" className="btn">
             <span onClick={(e) => onOptionClick(e)}>load</span>
           </Btn>

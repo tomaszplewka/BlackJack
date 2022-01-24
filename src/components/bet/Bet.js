@@ -43,6 +43,7 @@ const Bet = ({
       setTimeout(async () => {
         console.log("BET: ", e.target.bet.value);
         console.log("BET: ", bet);
+        console.log("DECK ID: ", currRound.deckId);
         const cards = await drawCards(currRound.deckId, 4);
         // Deal cards
         const { playerHand, dealerHand } = dealCards(cards);

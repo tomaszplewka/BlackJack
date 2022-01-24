@@ -1,10 +1,10 @@
 import React from "react";
 import "./Round.css";
 
-const Round = ({ gameState }) => {
+const Round = ({ round }) => {
   return (
     <div className="round-wrapper">
-      <h2>Round {gameState[gameState.length - 1].round}</h2>
+      <h2>Round {round}</h2>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import Btn from "../btn/Btn";
 import "./History.css";
 
 const History = ({ cb, gameState, setGameState }) => {
-  const [tempGameState, setTempGameState] = useState(gameState);
+  const [tempGameState] = useState(gameState);
   const renderedRounds = tempGameState
     .slice(0, tempGameState.length - 1)
     .map((round, index) => {
@@ -18,8 +18,8 @@ const History = ({ cb, gameState, setGameState }) => {
     });
 
   const onBtnClick = (e) => {
-    console.log(e.target.getAttribute("data-key"));
     const currRound = e.target.getAttribute("data-key");
+    // Set game state to chosen round
     setGameState(() => {
       return [
         {
@@ -30,8 +30,9 @@ const History = ({ cb, gameState, setGameState }) => {
   };
 
   const onGoBackClick = (e) => {
-    console.log("GO BACK CLICKED");
+    // Close history mode
     cb(false);
+    // Restore game's state
     setGameState(tempGameState);
   };
 
@@ -44,9 +45,11 @@ const History = ({ cb, gameState, setGameState }) => {
       </div>
       <div className="game-history-wrapper">
         {tempGameState.length === 1 ||
-        !tempGameState[tempGameState.length - 2].isRoundFinished
-          ? "NO HISTORY TO SHOW"
-          : renderedRounds}
+        !tempGameState[tempGameState.length - 2].isRoundFinished ? (
+          <p>NO HISTORY TO SHOW</p>
+        ) : (
+          renderedRounds
+        )}
       </div>
     </div>
   );
