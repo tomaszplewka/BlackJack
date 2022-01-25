@@ -5,8 +5,6 @@ import Auth from "./components/auth/Auth";
 import Table from "./components/table/Table";
 import Loader from "./components/loader/Loader";
 
-import "./App.css";
-
 const App = () => {
   const [appState, setAppState] = useState({
     deckId: "",
@@ -22,8 +20,15 @@ const App = () => {
   useEffect(() => {
     if (appState.getNewDeck) {
       // Get new deck
-      setTimeout(() => {
-        getDeck(setAppState);
+      setTimeout(async () => {
+        const deckId = await getDeck();
+        // Set state
+        setAppState((prevState) => ({
+          ...prevState,
+          deckId,
+          showLoader: false,
+          getNewDeck: false,
+        }));
       }, 1500);
     }
   }, [appState]);
@@ -35,8 +40,6 @@ const App = () => {
       showLoader: true,
     }));
   };
-
-  console.log("RENDER");
 
   return (
     <section>

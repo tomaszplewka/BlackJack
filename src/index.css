@@ -22,4 +22,22 @@
 body {
   font-family: var(--font-stack);
   background-color: rgb(1, 78, 1);
+  overflow-x: hidden;
+}
+/* Utilities */
+.overflow-hidden {
+  overflow: hidden;
+}
+.header-button-like {
+  text-transform: uppercase;
+  text-align: center;
+  width: 250px;
+  max-width: 100%;
+  height: 56px;
+  background-color: var(--color-smoky-black);
+  color: white;
+  font-size: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

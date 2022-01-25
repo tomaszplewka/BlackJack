@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Btn from "../btn/Btn";
 import Loader from "../loader/Loader";
 import TopResults from "../topResults/TopResults";
@@ -24,8 +24,11 @@ const Menu = ({
   const [isLoadOpen, setIsLoadOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const ref = useRef();
 
   const onMenuClick = () => {
+    // Toggle overflow hidden on body
+    document.body.classList.toggle("overflow-hidden");
     // Open / close menu
     setIsMenuOpen(!isMenuOpen);
     // Close TopResults and / or Load
@@ -63,6 +66,8 @@ const Menu = ({
     // Log out
     setTimeout(() => {
       Firebase.logOut(setAppState);
+      // Toggle overflow hidden on body
+      document.body.classList.toggle("overflow-hidden");
     }, 1500);
   };
 
@@ -97,6 +102,8 @@ const Menu = ({
     // Hide loader
     setTimeout(() => {
       setShowLoader(false);
+      // Toggle overflow hidden on body
+      document.body.classList.toggle("overflow-hidden");
     }, 1500);
   };
 
@@ -116,6 +123,8 @@ const Menu = ({
   };
 
   const onHistoryClick = (e) => {
+    // Toggle overflow hidden on body
+    document.body.classList.toggle("overflow-hidden");
     // Save user's game
     Firebase.storeData(appState.userId, gameState);
     // Close menu
@@ -143,7 +152,10 @@ const Menu = ({
           setGameState={setGameState}
         />
       ) : null}
-      <section className={`options-wrapper ${isMenuOpen ? "" : "roll-up"}`}>
+      <section
+        ref={ref}
+        className={`options-wrapper ${isMenuOpen ? "" : "roll-up"}`}
+      >
         <div className="options">
           <Btn id="top-results" className="btn">
             <span onClick={(e) => onOptionClick(e)}>top results</span>

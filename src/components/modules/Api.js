@@ -1,5 +1,8 @@
 import axios from "axios";
 
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 export const drawCards = async (deckId, numOfCards) => {
   try {
     const { data } = await axios.get(
@@ -12,14 +15,18 @@ export const drawCards = async (deckId, numOfCards) => {
       }
     );
     return data.cards;
-  } catch (e) {
-    // COME UP WITH SOMETHING BETTER
-    console.error("Error");
-    return null;
+  } catch (error) {
+    // Show alert
+    const swal = withReactContent(Swal);
+    await swal.fire({
+      title: <strong>Something went wrong!</strong>,
+      html: <i>{`API error! ${error.message}`}</i>,
+      icon: "error",
+    });
   }
 };
 
-export const getDeck = async (setAppState) => {
+export const getDeck = async () => {
   try {
     const { data } = await axios.get(
       "https://deckofcardsapi.com/api/deck/new/shuffle",
@@ -30,15 +37,14 @@ export const getDeck = async (setAppState) => {
         },
       }
     );
-    // Set state
-    setAppState((prevState) => ({
-      ...prevState,
-      deckId: data.deck_id,
-      showLoader: false,
-      getNewDeck: false,
-    }));
-  } catch (e) {
-    // COME UP WITH SOMETHING BETTER
-    console.error("Error");
+    return data.deck_id;
+  } catch (error) {
+    // Show alert
+    const swal = withReactContent(Swal);
+    await swal.fire({
+      title: <strong>Something went wrong!</strong>,
+      html: <i>{`API error! ${error.message}`}</i>,
+      icon: "error",
+    });
   }
 };

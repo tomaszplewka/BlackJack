@@ -165,8 +165,6 @@ const Table = ({ appState, setAppState, Firebase }) => {
   }, [gameState, isHistoryMode]);
 
   useEffect(() => {
-    console.log("EVENT LISTENER");
-
     const beforeUnloadCb = async (e) => {
       // Check if user is logged in
       if (appState.isUserLoggedIn) {
@@ -209,46 +207,36 @@ const Table = ({ appState, setAppState, Firebase }) => {
         setIsHistoryMode={setIsHistoryMode}
         Firebase={Firebase}
       />
-      <div className="table-wrapper">
+      <section className="table-wrapper">
         {gameState[gameState.length - 1].round ? (
           <Round round={gameState[gameState.length - 1].round} />
         ) : (
           ""
         )}
-        <Hand
-          player="dealer"
-          hand={gameState[gameState.length - 1].hands.dealerHand}
-          value={gameState[gameState.length - 1].handValue.dealerValue}
-        />
+        <Hand appState={appState} gameState={gameState} player="dealer" />
         <Feedback gameState={gameState} />
-        <Hand
-          player="player"
-          hand={gameState[gameState.length - 1].hands.playerHand}
-          value={gameState[gameState.length - 1].handValue.playerValue}
-        />
-        {isHistoryMode ? null : (
-          <div className="controls-wrapper">
-            <Balance balance={gameState[gameState.length - 1].balance} />
-            {gameState[gameState.length - 1].round ? (
-              <WhatNext
-                drawCards={drawCards}
-                dealCards={GameLogic.dealCards}
-                getHandValue={GameLogic.getHandValue}
-                gameState={gameState}
-                setGameState={setGameState}
-              />
-            ) : gameState[gameState.length - 1].isGameFinished ? null : (
-              <Bet
-                drawCards={drawCards}
-                dealCards={GameLogic.dealCards}
-                getHandValue={GameLogic.getHandValue}
-                gameState={gameState}
-                setGameState={setGameState}
-              />
-            )}
-          </div>
-        )}
-      </div>
+        <Hand appState={appState} gameState={gameState} player="player" />
+        <div className="controls-wrapper">
+          <Balance balance={gameState[gameState.length - 1].balance} />
+          {isHistoryMode ? null : gameState[gameState.length - 1].round ? (
+            <WhatNext
+              drawCards={drawCards}
+              dealCards={GameLogic.dealCards}
+              getHandValue={GameLogic.getHandValue}
+              gameState={gameState}
+              setGameState={setGameState}
+            />
+          ) : gameState[gameState.length - 1].isGameFinished ? null : (
+            <Bet
+              drawCards={drawCards}
+              dealCards={GameLogic.dealCards}
+              getHandValue={GameLogic.getHandValue}
+              gameState={gameState}
+              setGameState={setGameState}
+            />
+          )}
+        </div>
+      </section>
     </>
   );
 };

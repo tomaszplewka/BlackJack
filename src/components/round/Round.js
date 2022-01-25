@@ -4,7 +4,7 @@ import "./Round.css";
 const Round = ({ round }) => {
   return (
     <div className="round-wrapper">
-      <h2>Round {round}</h2>
+      <h2 className="header-button-like">Round {round}</h2>
     </div>
   );
 };

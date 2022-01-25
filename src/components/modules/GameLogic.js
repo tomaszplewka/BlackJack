@@ -2,6 +2,7 @@ const GameLogic = (() => {
   const dealCards = (cards, single = []) => {
     let playerHand = [];
     let dealerHand = [];
+
     if (single.length) {
       if (single[0] === "player") {
         playerHand.push({ card: cards[0], back: false });
@@ -114,8 +115,8 @@ const GameLogic = (() => {
   };
 
   const resolveDealer = ({ gameState, setGameState }) => {
-    // First check dealer's hand
     const hands = gameState[gameState.length - 1].hands;
+    // First check dealer's hand
     const dealerValue = getHandValue(hands.dealerHand, false);
     const mappedDealerHand = gameState[
       gameState.length - 1
@@ -127,7 +128,7 @@ const GameLogic = (() => {
     });
 
     if (dealerValue >= 17) {
-      console.log("DEALER'S NOT DRAWING ANYMORE");
+      // Dealer is not drawing anymore
       setGameState((prevState) => {
         const currRound = prevState[prevState.length - 1];
         const result =

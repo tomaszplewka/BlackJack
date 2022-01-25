@@ -1,0 +1,26 @@
+.game-history {
+  background-color: black;
+  z-index: 999999;
+  position: relative;
+}
+.game-history .go-back-wrapper {
+  width: 100%;
+  margin: 0;
+  padding: 32px;
+  padding-bottom: 0;
+}
+.game-history-wrapper {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px 32px;
+}
+.game-history-wrapper .btn {
+  margin: 0;
+  padding: 0;
+  font-size: 28px;
+  flex: 1;
+  max-width: 200px;
+}

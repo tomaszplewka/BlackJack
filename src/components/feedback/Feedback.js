@@ -2,7 +2,6 @@ import React from "react";
 import "./Feedback.css";
 
 const Feedback = ({ gameState }) => {
-  console.log(gameState);
   const currRound = gameState[gameState.length - 1];
   return (
     <div className="feedback-wrapper">

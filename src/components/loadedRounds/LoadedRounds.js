@@ -25,6 +25,8 @@ const LoadedRounds = ({
       // Hide loader
       setTimeout(() => {
         setShowLoader(false);
+        // Toggle overflow hidden on body
+        document.body.classList.toggle("overflow-hidden");
       }, 300);
     }, 1500);
   };

@@ -1,6 +1,11 @@
-import React, { useRef } from "react";
-import "./WhatNext.css";
+import React, { useState, useRef } from "react";
 import Btn from "../btn/Btn";
+import Loader from "../loader/Loader";
+
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+import "./WhatNext.css";
 
 const WhatNext = ({
   drawCards,
@@ -9,15 +14,22 @@ const WhatNext = ({
   gameState,
   setGameState,
 }) => {
+  const [showLoader, setShowLoader] = useState(false);
   const ref = useRef();
 
   const onHitClick = () => {
-    console.log("HIT IS CLICKED");
     // Disable what-next btn
     ref.current.firstElementChild.disabled = true;
     // Draw a card
     setTimeout(async () => {
       const card = await drawCards(gameState[gameState.length - 1].deckId, 1);
+      // Check if card exists
+      if (!card) {
+        // Show loader
+        setShowLoader(true);
+
+        return;
+      }
       // Deal cards & concat with current hand
       const newCard = dealCards(card, ["player"]);
       const currPlayerHand = gameState[gameState.length - 1].hands.playerHand;
@@ -82,7 +94,6 @@ const WhatNext = ({
   };
 
   const onStandClick = () => {
-    console.log("STAND IS CLICKED");
     // Disable what-next btn
     ref.current.firstElementChild.disabled = true;
     // Set state
@@ -111,18 +122,24 @@ const WhatNext = ({
     });
   };
 
-  const onDoubleDownClick = () => {
-    console.log("DOUBLE DOWN IS CLICKED");
+  const onDoubleDownClick = async () => {
     const tempBalance =
       gameState[gameState.length - 1].balance -
       gameState[gameState.length - 1].bet;
-
+    // Check if balance > 0
     if (tempBalance >= 0) {
       // Disable what-next btn
       ref.current.firstElementChild.disabled = true;
       // Draw a card
       setTimeout(async () => {
         const card = await drawCards(gameState[gameState.length - 1].deckId, 1);
+        // Check if cards exists
+        if (!card) {
+          // Show loader
+          setShowLoader(true);
+
+          return;
+        }
         // Deal cards & concat with current hand
         const newCard = dealCards(card, ["player"]);
         const currPlayerHand = gameState[gameState.length - 1].hands.playerHand;
@@ -185,29 +202,38 @@ const WhatNext = ({
         });
       }, 1500);
     } else {
-      alert("Nie mozesz tak zrobic!!!");
+      // Show alert
+      const swal = withReactContent(Swal);
+      await swal.fire({
+        title: <strong>Double down not possible!</strong>,
+        html: <i>Insufficient balance!</i>,
+        icon: "error",
+      });
     }
   };
 
   return (
-    <div ref={ref} className="what-next-wrapper">
-      <Btn id="what-next-btn" className="btn">
-        <span className="btn-text">what next</span>
-        <ul className="choices">
-          <li onClick={onHitClick}>
-            <span id="hit">hit</span>
-          </li>
-          <li onClick={onStandClick}>
-            <span id="stand">stand</span>
-          </li>
-          {gameState[gameState.length - 1].lastMove === "hit" ? null : (
-            <li onClick={onDoubleDownClick}>
-              <span id="double-down">double down</span>
+    <>
+      <div ref={ref} className="what-next-wrapper">
+        <Btn id="what-next-btn" className="btn">
+          <span className="btn-text">what next</span>
+          <ul className="choices">
+            <li onClick={onHitClick}>
+              <span id="hit">hit</span>
             </li>
-          )}
-        </ul>
-      </Btn>
-    </div>
+            <li onClick={onStandClick}>
+              <span id="stand">stand</span>
+            </li>
+            {gameState[gameState.length - 1].lastMove === "hit" ? null : (
+              <li onClick={onDoubleDownClick}>
+                <span id="double-down">double down</span>
+              </li>
+            )}
+          </ul>
+        </Btn>
+      </div>
+      {showLoader ? <Loader /> : null}
+    </>
   );
 };
 

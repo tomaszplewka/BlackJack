@@ -13,8 +13,8 @@
   background: black;
   align-self: flex-start;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0;
+  right: 0;
   z-index: 10;
 }
 
@@ -33,44 +33,26 @@
   border-radius: 5px;
   opacity: 1;
   left: 20px;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
   transform: rotate(0deg);
-  -webkit-transition: 0.25s ease-in-out;
-  -moz-transition: 0.25s ease-in-out;
-  -o-transition: 0.25s ease-in-out;
   transition: 0.25s ease-in-out;
 }
 
 .menu-wrapper > div > span:nth-child(1) {
   top: 24px;
-  -webkit-transform-origin: left center;
-  -moz-transform-origin: left center;
-  -o-transform-origin: left center;
   transform-origin: left center;
 }
 
 .menu-wrapper > div > span:nth-child(2) {
   top: 37px;
-  -webkit-transform-origin: left center;
-  -moz-transform-origin: left center;
-  -o-transform-origin: left center;
   transform-origin: left center;
 }
 
 .menu-wrapper > div > span:nth-child(3) {
   top: 50px;
-  -webkit-transform-origin: left center;
-  -moz-transform-origin: left center;
-  -o-transform-origin: left center;
   transform-origin: left center;
 }
 
 .menu-wrapper.open > div > span:nth-child(1) {
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
   transform: rotate(45deg);
   top: 24px;
   left: 26px;
@@ -82,9 +64,6 @@
 }
 
 .menu-wrapper.open > div > span:nth-child(3) {
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
   top: 50px;
   left: 26px;
@@ -145,8 +124,8 @@
   width: 50%;
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 2rem;
-  padding: 1rem;
+  margin-bottom: 32px;
+  padding: 20px;
 }
 .btn-wrapper .control-btn {
   background-color: transparent;
@@ -160,36 +139,10 @@
 }
 .top-results ul li,
 .loaded-rounds ul li {
-  font-size: 1.5rem;
+  font-size: 28px;
+  font-weight: bold;
 }
 .top-results ul li:hover,
 .loaded-rounds ul li:hover {
   background-color: transparent;
-}
-
-.game-history {
-  background-color: black;
-  z-index: 999999;
-  position: relative;
-}
-.game-history .go-back-wrapper {
-  width: 100%;
-  margin: 0;
-  padding: 2rem;
-  padding-bottom: 0;
-}
-.game-history-wrapper {
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 1rem 2rem;
-}
-.game-history-wrapper .btn {
-  margin: 0;
-  padding: 0;
-  font-size: 1.5rem;
-  flex: 1;
-  max-width: 150px;
 }

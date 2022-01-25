@@ -21,14 +21,26 @@
   justify-content: center;
   align-items: center;
 }
+.hand-info > span {
+  display: inline-block;
+  margin-right: 16px;
+}
+.hand-info img {
+  height: 100%;
+  width: 80px;
+  margin-right: 16px;
+  border-radius: 50%;
+  border: solid 2px white;
+}
 .hand-name {
   color: white;
   text-align: center;
-  padding: 16px 16px 16px 0;
+  padding: 16px 0;
   text-transform: uppercase;
   letter-spacing: 2px;
 }
 .hand-value {
+  margin-left: 16px;
   width: 50px;
   height: 50px;
   color: black;
@@ -48,4 +60,5 @@
 }
 .dealer-hand-card-wrapper {
   transform: rotateZ(180deg);
+  margin-top: 100px;
 }

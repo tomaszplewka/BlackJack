@@ -1,8 +1,11 @@
 import React from "react";
-import "./Balance.css";
 
 const Balance = ({ balance }) => {
-  return <div className="balance">{balance}</div>;
+  return (
+    <div className="balance">
+      <h2 className="header-button-like">{balance}</h2>
+    </div>
+  );
 };
 
 export default Balance;

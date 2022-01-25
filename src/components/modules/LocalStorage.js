@@ -1,6 +1,7 @@
 const LocalStorage = (() => {
   const setTopResults = (result) => {
     const topResults = getFromLS("results");
+    // Resolve topResults
     if (topResults === null) {
       // No results in local storage
       const data = { results: [result] };
@@ -17,9 +18,11 @@ const LocalStorage = (() => {
       localStorage.setItem("results", JSON.stringify(topResults));
     }
   };
+
   const getFromLS = (key) => {
     return JSON.parse(localStorage.getItem(key));
   };
+
   const saveToLocalStorage = (key, data) => {
     localStorage.setItem(key, JSON.stringify(data));
   };

@@ -120,8 +120,7 @@
   background-color: transparent;
 }
 #sign-in.btn,
-#what-next-btn.btn,
-#sign-in-options {
+#what-next-btn.btn {
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -133,8 +132,7 @@
   margin: 0;
 }
 #sign-in.btn::before,
-#what-next-btn.btn::before,
-#sign-in-options::before {
+#what-next-btn.btn::before {
   position: absolute;
   content: "";
   top: 0;
@@ -145,11 +143,20 @@
   background: var(--color-carolina-blue);
   transition: 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
-#sign-in.btn:hover .btn-text {
+#sign-in.btn:hover .choices,
+#what-next-btn.btn:hover .choices {
+  transform: translateY(0);
+}
+#sign-in.btn:hover .btn-text,
+#what-next-btn.btn:hover .btn-text {
   transform: translateY(-100px);
 }
-#sign-in.btn:hover .choices {
+#sign-in.btn:hover .choices li span,
+#what-next-btn.btn:hover .choices li span {
   transform: translateY(0);
+}
+#what-next-btn.btn:disabled {
+  pointer-events: none;
 }
 .choices {
   position: absolute;
@@ -183,16 +190,7 @@ li span {
   font-size: 16px;
   line-height: 1em;
 }
-#sign-in.btn:hover .btn-text,
-#what-next-btn.btn:hover .btn-text,
-#sign-in-options:hover .btn-text {
-  transform: translateY(-100px);
-}
-#sign-in.btn:hover .choices li span,
-#what-next-btn.btn:hover .choices li span,
-#sign-in-options:hover .social-icons li span {
-  transform: translateY(0);
-}
-#what-next-btn.btn:disabled {
-  pointer-events: none;
+li span svg {
+  height: 30px !important;
+  width: 30px !important;
 }

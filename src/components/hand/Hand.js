@@ -1,8 +1,24 @@
 import React from "react";
-import "./Hand.css";
 import Card from "../card/Card";
 
-const Hand = ({ player, hand, value }) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { faUser, faUserNinja } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+import "./Hand.css";
+library.add(fab, faUser, faUserNinja);
+
+const Hand = ({ appState, gameState, player }) => {
+  const { displayName, photoUrl } = appState;
+  const hand =
+    player === "player"
+      ? gameState[gameState.length - 1].hands.playerHand
+      : gameState[gameState.length - 1].hands.dealerHand;
+  const value =
+    player === "player"
+      ? gameState[gameState.length - 1].handValue.playerValue
+      : gameState[gameState.length - 1].handValue.dealerValue;
   const renderedHand =
     hand === null
       ? []
@@ -21,7 +37,20 @@ const Hand = ({ player, hand, value }) => {
     <div className={`hand-wrapper ${player === "dealer" ? "reverse" : ""}`}>
       <div className="hand-content">
         <div className="hand-info">
-          <h2 className="hand-name">{player}</h2>
+          {photoUrl && player === "player" ? (
+            <img src={photoUrl} alt="" />
+          ) : player === "dealer" ? (
+            <span>
+              <FontAwesomeIcon icon="user-ninja" size="3x" inverse />
+            </span>
+          ) : (
+            <span>
+              <FontAwesomeIcon icon="user" size="3x" inverse />
+            </span>
+          )}
+          <h2 className="hand-name">
+            {player === "player" ? displayName ?? "guest" : "dealer"}
+          </h2>
           {renderedHand.length ? <h3 className="hand-value">{value}</h3> : ""}
         </div>
       </div>
