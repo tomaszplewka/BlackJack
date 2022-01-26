@@ -21,10 +21,13 @@
 }
 body {
   font-family: var(--font-stack);
-  background-color: rgb(1, 78, 1);
   overflow-x: hidden;
+  background-color: black;
 }
 /* Utilities */
+.bg-green {
+  background-color: rgb(1, 78, 1);
+}
 .overflow-hidden {
   overflow: hidden;
 }

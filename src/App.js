@@ -21,6 +21,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setIniitalLoader(false);
+      document.body.classList.add("bg-green");
     }, 2000);
   }, []);
 
