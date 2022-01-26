@@ -30,16 +30,18 @@ const Firebase = (() => {
       // Get user's data
       const { getNewDeck, gameState, showLoader } = await resolveUserData();
       // Set state
-      setAppState((prevState) => {
-        return {
-          ...prevState,
-          userId: "guest",
-          getNewDeck,
-          isUserLoggedIn: true,
-          gameState,
-          showLoader,
-        };
-      });
+      setTimeout(() => {
+        setAppState((prevState) => {
+          return {
+            ...prevState,
+            userId: "guest",
+            getNewDeck,
+            isUserLoggedIn: true,
+            gameState,
+            showLoader,
+          };
+        });
+      }, 1500);
     } catch (error) {
       // Show alert
       const swal = withReactContent(Swal);
@@ -61,18 +63,20 @@ const Firebase = (() => {
         result.user.uid
       );
       // Set state
-      setAppState((prevState) => {
-        return {
-          ...prevState,
-          userId: result.user.uid,
-          getNewDeck,
-          isUserLoggedIn: true,
-          gameState,
-          showLoader,
-          displayName: result.user.displayName,
-          photoUrl: result.user.photoURL,
-        };
-      });
+      setTimeout(() => {
+        setAppState((prevState) => {
+          return {
+            ...prevState,
+            userId: result.user.uid,
+            getNewDeck,
+            isUserLoggedIn: true,
+            gameState,
+            showLoader,
+            displayName: result.user.displayName,
+            photoUrl: result.user.photoURL,
+          };
+        });
+      }, 1500);
     } catch (error) {
       // Show alert
       const swal = withReactContent(Swal);
@@ -94,18 +98,20 @@ const Firebase = (() => {
         result.user.uid
       );
       // Set state
-      setAppState((prevState) => {
-        return {
-          ...prevState,
-          userId: result.user.uid,
-          getNewDeck,
-          isUserLoggedIn: true,
-          gameState,
-          showLoader,
-          displayName: result.user.displayName,
-          photoUrl: result.user.photoURL,
-        };
-      });
+      setTimeout(() => {
+        setAppState((prevState) => {
+          return {
+            ...prevState,
+            userId: result.user.uid,
+            getNewDeck,
+            isUserLoggedIn: true,
+            gameState,
+            showLoader,
+            displayName: result.user.displayName,
+            photoUrl: result.user.photoURL,
+          };
+        });
+      }, 1500);
     } catch (error) {
       // Show alert
       const swal = withReactContent(Swal);

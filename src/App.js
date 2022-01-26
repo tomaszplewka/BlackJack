@@ -6,6 +6,7 @@ import Table from "./components/table/Table";
 import Loader from "./components/loader/Loader";
 
 const App = () => {
+  const [initialLoader, setIniitalLoader] = useState(true);
   const [appState, setAppState] = useState({
     deckId: "",
     showLoader: false,
@@ -16,6 +17,12 @@ const App = () => {
     isUserLoggedIn: false,
     gameState: null,
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIniitalLoader(false);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     if (appState.getNewDeck) {
@@ -43,6 +50,7 @@ const App = () => {
 
   return (
     <section>
+      {initialLoader ? <Loader /> : null}
       {appState.isUserLoggedIn && (appState.deckId || appState.gameState) ? (
         <Table
           appState={appState}

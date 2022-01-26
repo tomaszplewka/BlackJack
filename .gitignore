@@ -28,3 +28,4 @@ src/components/modules/FirebaseConfig.js
 firebase.json
 firestore.indexes.json
 firestore.rules
+.firebase
