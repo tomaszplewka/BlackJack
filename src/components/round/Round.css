@@ -1,5 +1,33 @@
 .round-wrapper {
   position: absolute;
-  top: 44px;
+  top: 32px;
   left: 32px;
+}
+
+@media screen and (max-width: 1440px) {
+  .round-wrapper {
+    top: 24px;
+    left: 24px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .round-wrapper {
+    top: 12px;
+    left: 12px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .round-wrapper {
+    top: 8px;
+    left: 8px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .round-wrapper {
+    top: 0;
+    left: 0;
+  }
 }

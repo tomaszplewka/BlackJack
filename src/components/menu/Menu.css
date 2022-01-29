@@ -146,3 +146,101 @@
 .loaded-rounds ul li:hover {
   background-color: transparent;
 }
+
+@media screen and (max-width: 1440px) {
+  .menu-wrapper {
+    width: 64px;
+    height: 64px;
+  }
+  .menu-wrapper > div > span {
+    width: 34px;
+    left: 15px;
+  }
+  .menu-wrapper > div > span:nth-child(1) {
+    top: 18px;
+  }
+
+  .menu-wrapper > div > span:nth-child(2) {
+    top: 31px;
+  }
+
+  .menu-wrapper > div > span:nth-child(3) {
+    top: 44px;
+  }
+
+  .menu-wrapper.open > div > span:nth-child(1) {
+    top: 20px;
+    left: 23px;
+  }
+
+  .menu-wrapper.open > div > span:nth-child(3) {
+    top: 44px;
+    left: 23px;
+  }
+
+  .btn-wrapper {
+    margin-bottom: 24px;
+    padding: 16px;
+  }
+
+  .top-results ul li,
+  .loaded-rounds ul li {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .btn-wrapper {
+    margin-bottom: 20px;
+    padding: 12px;
+  }
+
+  .top-results ul li,
+  .loaded-rounds ul li {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .btn-wrapper {
+    margin-bottom: 16px;
+    padding: 8px;
+  }
+
+  .top-results ul li,
+  .loaded-rounds ul li {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .menu-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+  .menu-wrapper > div > span {
+    width: 27px;
+    left: 10px;
+  }
+  .menu-wrapper > div > span:nth-child(1) {
+    top: 11px;
+  }
+
+  .menu-wrapper > div > span:nth-child(2) {
+    top: 24px;
+  }
+
+  .menu-wrapper > div > span:nth-child(3) {
+    top: 37px;
+  }
+
+  .menu-wrapper.open > div > span:nth-child(1) {
+    top: 16px;
+    left: 15px;
+  }
+
+  .menu-wrapper.open > div > span:nth-child(3) {
+    top: 35px;
+    left: 15px;
+  }
+}

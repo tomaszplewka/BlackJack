@@ -41,11 +41,11 @@ const Hand = ({ appState, gameState, player }) => {
             <img src={photoUrl} alt="" />
           ) : player === "dealer" ? (
             <span>
-              <FontAwesomeIcon icon="user-ninja" size="3x" inverse />
+              <FontAwesomeIcon icon="user-ninja" inverse />
             </span>
           ) : (
             <span>
-              <FontAwesomeIcon icon="user" size="3x" inverse />
+              <FontAwesomeIcon icon="user" inverse />
             </span>
           )}
           <h2 className="hand-name">

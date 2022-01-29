@@ -69,10 +69,9 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem 1.25rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 16px;
   text-decoration: none;
-  font-size: 1.25rem;
+  font-size: 20px;
   width: auto;
   font-family: var(--font-stack);
   text-transform: uppercase;
@@ -193,4 +192,70 @@ li span {
 li span svg {
   height: 30px !important;
   width: 30px !important;
+}
+
+@media screen and (max-width: 1440px) {
+  .btn {
+    width: 250px;
+    height: 48px;
+    margin-bottom: 8px;
+    font-size: 24px;
+  }
+  .control-btn {
+    margin-bottom: 12px;
+    font-size: 16px;
+  }
+  #what-next-btn.btn {
+    font-size: 24px;
+  }
+  li span {
+    font-size: 15px;
+  }
+  li span svg {
+    height: 25px !important;
+    width: 25px !important;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .btn {
+    width: 225px;
+    height: 40px;
+    font-size: 20px;
+  }
+  .control-btn {
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+  #what-next-btn.btn {
+    font-size: 20px;
+  }
+  li span {
+    font-size: 14px;
+  }
+  li span svg {
+    height: 20px !important;
+    width: 20px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .btn {
+    width: 200px;
+    height: 36px;
+    font-size: 18px;
+  }
+  .control-btn {
+    font-size: 14px;
+  }
+  #what-next-btn.btn {
+    font-size: 18px;
+  }
+  li span {
+    font-size: 13px;
+  }
+  li span svg {
+    height: 18px !important;
+    width: 18px !important;
+  }
 }

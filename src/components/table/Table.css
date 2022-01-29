@@ -12,3 +12,48 @@
   align-items: center;
   margin-top: 32px;
 }
+
+@media screen and (max-width: 1440px) {
+  .table-wrapper {
+    max-width: 85%;
+    padding: 24px;
+  }
+
+  .controls-wrapper {
+    margin-top: 24px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .table-wrapper {
+    max-width: 95%;
+    padding: 12px;
+  }
+
+  .controls-wrapper {
+    margin-top: 12px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .table-wrapper {
+    max-width: 98%;
+    padding: 0;
+  }
+
+  .controls-wrapper {
+    margin-top: 8px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .table-wrapper {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .controls-wrapper {
+    flex-direction: column;
+  }
+}

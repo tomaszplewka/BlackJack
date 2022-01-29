@@ -77,3 +77,58 @@ form#bet-form {
   padding: 0;
   margin: 12px 0 0;
 }
+
+@media screen and (max-width: 1440px) {
+  .number-input button {
+    width: 40px;
+    height: 40px;
+  }
+  .number-input button:before,
+  .number-input button:after {
+    width: 24px;
+    height: 3px;
+  }
+  .number-input input[type="number"] {
+    font-size: 24px;
+    height: 40px;
+  }
+  #bet-submit {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .number-input button {
+    width: 35px;
+    height: 35px;
+  }
+  .number-input button:before,
+  .number-input button:after {
+    width: 20px;
+    height: 2px;
+  }
+  .number-input input[type="number"] {
+    font-size: 20px;
+  }
+  #bet-submit {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .number-input button {
+    width: 30px;
+    height: 30px;
+  }
+  .number-input button:before,
+  .number-input button:after {
+    width: 18px;
+    height: 2px;
+  }
+  .number-input input[type="number"] {
+    font-size: 18px;
+  }
+  #bet-submit {
+    font-size: 18px;
+  }
+}

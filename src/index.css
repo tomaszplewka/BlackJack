@@ -44,3 +44,35 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 1440px) {
+  .header-button-like {
+    height: 48px;
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .header-button-like {
+    width: 225px;
+    height: 40px;
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header-button-like {
+    width: 200px;
+    height: 36px;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .balance {
+    width: 100%;
+  }
+  .balance .header-button-like {
+    width: 100%;
+  }
+}

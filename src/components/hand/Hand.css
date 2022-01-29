@@ -25,6 +25,10 @@
   display: inline-block;
   margin-right: 16px;
 }
+.hand-info > span > svg {
+  height: 45px !important;
+  width: 45px !important;
+}
 .hand-info img {
   height: 100%;
   width: 80px;
@@ -61,4 +65,67 @@
 .dealer-hand-card-wrapper {
   transform: rotateZ(180deg);
   margin-top: 100px;
+}
+
+@media screen and (max-width: 1440px) {
+  .dealer-hand-card-wrapper {
+    margin-top: 80px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .dealer-hand-card-wrapper {
+    margin-top: 68px;
+  }
+  .hand-info > span {
+    margin-right: 12px;
+  }
+  .hand-info > span > svg {
+    height: 35px !important;
+    width: 35px !important;
+  }
+  .hand-info img {
+    width: 60px;
+    margin-right: 12px;
+  }
+  .hand-name {
+    padding: 12px 0;
+  }
+  .hand-value {
+    margin-left: 12px;
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .dealer-hand-card-wrapper {
+    margin-top: 56px;
+  }
+  .hand-info > span {
+    margin-right: 8px;
+  }
+  .hand-info > span > svg {
+    height: 30px !important;
+    width: 30px !important;
+  }
+  .hand-info img {
+    width: 50px;
+    margin-right: 8px;
+  }
+  .hand-name {
+    padding: 8px 0;
+  }
+  .hand-value {
+    margin-left: 8px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hand-info img {
+    width: 45px;
+  }
+  .hand-name {
+    font-size: 20px;
+  }
 }

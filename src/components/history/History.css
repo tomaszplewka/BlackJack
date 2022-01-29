@@ -24,3 +24,51 @@
   flex: 1;
   max-width: 200px;
 }
+
+@media screen and (max-width: 1440px) {
+  .game-history .go-back-wrapper {
+    padding: 24px;
+  }
+  .game-history-wrapper {
+    padding: 16px 24px;
+  }
+  .game-history-wrapper .btn {
+    font-size: 24px;
+    max-width: 175px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .game-history .go-back-wrapper {
+    padding: 20px;
+  }
+  .game-history-wrapper {
+    padding: 12px 20px;
+  }
+  .game-history-wrapper .btn {
+    font-size: 20px;
+    max-width: 150px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .game-history .go-back-wrapper {
+    padding: 16px;
+  }
+  .game-history-wrapper {
+    padding: 8px 16px;
+  }
+  .game-history-wrapper .btn {
+    font-size: 18px;
+    max-width: 125px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .game-history .go-back-wrapper {
+    padding: 12px;
+  }
+  .game-history-wrapper {
+    padding: 8px 12px;
+  }
+}

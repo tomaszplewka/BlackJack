@@ -1,3 +1,22 @@
 .what-next-wrapper {
   width: 250px;
 }
+
+@media screen and (max-width: 992px) {
+  .what-next-wrapper {
+    width: 225px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .what-next-wrapper {
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .what-next-wrapper {
+    width: 100%;
+    margin-top: 16px;
+  }
+}

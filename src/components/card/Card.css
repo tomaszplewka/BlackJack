@@ -26,3 +26,24 @@
     transform: translateX(0) translateY(0);
   }
 }
+
+@media screen and (max-width: 1440px) {
+  .card {
+    width: 95.34375px;
+    height: 132.46875px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .card {
+    width: 85.81px;
+    height: 119.22px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .card {
+    width: 77.23px !important;
+    height: 107.3px !important;
+  }
+}

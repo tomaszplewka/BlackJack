@@ -66,3 +66,63 @@
   top: -4px;
   left: -4px;
 }
+
+@media screen and (max-width: 1440px) {
+  .feedback-wrapper {
+    min-height: 135px;
+  }
+  .chips {
+    height: 90px;
+    width: 90px;
+    font-size: 18px;
+  }
+
+  .feedback-content {
+    font-size: 18px;
+    margin: 0 24px;
+  }
+  .card-pile {
+    width: 95.34375px;
+    height: 132.46875px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .feedback-wrapper {
+    min-height: 120px;
+  }
+  .chips {
+    height: 80px;
+    width: 80px;
+    font-size: 16px;
+  }
+
+  .feedback-content {
+    font-size: 16px;
+    margin: 0 20px;
+  }
+  .card {
+    width: 85.81px;
+    height: 119.22px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .feedback-wrapper {
+    justify-content: center;
+    flex-direction: column;
+    padding: 16px 0;
+  }
+
+  .feedback-wrapper > div {
+    flex: 1;
+  }
+
+  .feedback-wrapper > div:last-of-type {
+    display: none;
+  }
+
+  .feedback-content {
+    padding-top: 12px;
+  }
+}
