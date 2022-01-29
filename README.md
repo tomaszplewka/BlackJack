@@ -4,7 +4,7 @@
       <img src="https://img.shields.io/github/issues/tomaszplewka/BlackJack" alt="issues">
       <img src="https://img.shields.io/github/forks/tomaszplewka/BlackJack" alt="forks">
       <img src="https://img.shields.io/github/stars/tomaszplewka/BlackJack" alt="stars">
-     
+      <img src="https://img.shields.io/github/license/tomaszplewka/BlackJack" alt="license">
     </p>
 </div>
 <p align="center">
